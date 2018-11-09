@@ -36,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         getMenuItems(requestMenuStr);
     }
 
+    //获取总金额
     public int getTotalMoney()
     {
         TextView TotalMoney = (TextView) findViewById(R.id.item_TotalMoney);
@@ -44,12 +45,34 @@ public class MenuActivity extends AppCompatActivity {
         return Integer.parseInt(totalMoney);
     }
 
+    //设置（初始化）总金额
     public void setTotalMoney(int newTotalMoney)
     {
         TextView TotalMoney = (TextView) findViewById(R.id.item_TotalMoney);
         TotalMoney.setText(String.valueOf(newTotalMoney)+"元");
     }
 
+    //获取菜单项
+    private void getMenuItems(final String requestMenuStr){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url("http://22614b9s80.iask.in/api/getMenu?"+requestMenuStr)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    InitMenu(responseData);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //根据获取的菜单项建立菜单
     private void initMenuItems(String responseData){
         //通过构造函数来获取
         Gson gson = new Gson();
@@ -72,31 +95,11 @@ public class MenuActivity extends AppCompatActivity {
         TotalMoney.setText(totalMoney+"元");
     }
 
-    private void getMenuItems(final String requestMenuStr){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder()
-                            .url("http://22614b9s80.iask.in/api/getMenu?"+requestMenuStr)
-                            .build();
-                    Response response = client.newCall(request).execute();
-                    String responseData = response.body().string();
-                    InitMenu(responseData);
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     //初始化菜单
     private void InitMenu(final String responseData){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //初始化右边
                 initMenuItems(responseData);
                 RightAdapter rightAdapter = new RightAdapter(MenuActivity.this,R.layout                                                                                                                                                                                                                                                                                                                                                                                                   .menu_item,rightList);
                 ListView Right_ListView = (ListView) findViewById(R.id.right_ListView);
@@ -112,6 +115,7 @@ public class MenuActivity extends AppCompatActivity {
         pushToServer(pushData);
     }
 
+    //提交订单到服务器
     private void pushToServer(final String pushData){
         new Thread(new Runnable() {
             @Override
@@ -136,6 +140,4 @@ public class MenuActivity extends AppCompatActivity {
             }
         }).start();
     }
-
-
 }

@@ -31,6 +31,22 @@ public class MainActivity extends AppCompatActivity {
         mActivity = this;
     }
 
+    //点餐按钮绑定事件
+    public void Order(View v) {
+        init();
+    }
+
+    //结账按钮绑定事件
+    public void PayMoney(View v){
+        startActivities(new Intent[]{new Intent(MainActivity.this,PayActivity.class)});
+    }
+
+    public void ScanCodes()
+    {
+        startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), REQUEST_SCAN);
+    }
+
+
     private void init() {
         getRuntimeRight();
     }
@@ -58,19 +74,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
-    }
-
-    public void Order(View v) {
-        init();
-    }
-
-    public void PayMoney(View v){
-        startActivities(new Intent[]{new Intent(MainActivity.this,PayActivity.class)});
-    }
-
-    public void ScanCodes()
-    {
-        startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), REQUEST_SCAN);
     }
 
     @Override
