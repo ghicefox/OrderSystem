@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         responseText = findViewById(R.id.response_text);
-        //sendRequestWithOkHttp();
         mContext = this;
         mActivity = this;
     }
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         getRuntimeRight();
     }
-    /**
+    /*
      * 获得运行时权限
      */
     private void getRuntimeRight() {
@@ -59,15 +58,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
-    }
-
-    private void showResponse(final String responseData){
-         runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                responseText.setText(responseData);
-            }
-        });
     }
 
     public void Order(View v) {
