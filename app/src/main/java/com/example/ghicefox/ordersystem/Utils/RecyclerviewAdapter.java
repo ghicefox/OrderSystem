@@ -38,6 +38,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             @Override
             public void onClick(View v) {
                 Log.e("这里是点击每一行item的响应事件",""+position);
+                int menuId = list.get(position).getId();
+                context.getMenuItemInfo(menuId);
             }
         });
         holder.mCount.setText(String.valueOf(list.get(position).getCount()));
@@ -95,4 +97,5 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
         }
     }
+
 }

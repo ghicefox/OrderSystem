@@ -1,14 +1,22 @@
 package com.example.ghicefox.ordersystem.Activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ghicefox.ordersystem.Models.MenuItem;
+import com.example.ghicefox.ordersystem.Models.MenuItemInfo;
 import com.example.ghicefox.ordersystem.Models.menu;
 import com.example.ghicefox.ordersystem.R;
 import com.example.ghicefox.ordersystem.Utils.RecyclerviewAdapter;
@@ -141,5 +149,66 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    //获取菜品详情
+    public void getMenuItemInfo(final int menuId){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url("http://22614b9s80.iask.in/api/getMenuItemInfo?menuId="+menuId)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    //通过构造函数来获取
+                    Gson gson = new Gson();
+                    Type objectType = new TypeToken<MenuItemInfo>() {}.getType();
+                    MenuItemInfo menuItemInfo = gson.fromJson(responseData, objectType);
+                    Looper.prepare();
+                    showDialog(menuItemInfo.getProfile(),stringToBitmap(menuItemInfo.getPicture()));
+                    Looper.loop();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private Bitmap stringToBitmap(String string) {
+        // 将字符串转换成Bitmap类型
+        Bitmap bitmap = null;
+        try {
+            byte[] bitmapArray;
+            bitmapArray = Base64.decode(string, Base64.DEFAULT);
+            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0,
+                    bitmapArray.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    private void showDialog(String profile, Bitmap picture)
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+        // 通过LayoutInflater来加载一个xml的布局文件作为一个View对象
+        View view = LayoutInflater.from(MenuActivity.this).inflate(R.layout.dialog_layout, null);
+        // 设置我们自己定义的布局文件作为弹出框的Content
+        builder.setView(view);
+        //这个位置十分重要，只有位于这个位置逻辑才是正确的
+        final AlertDialog dialog = builder.show();
+        ImageView menuItemPicture = view.findViewById(R.id.menuitem_picture);
+        TextView menuItemProfile = view.findViewById(R.id.menuitem_profile);
+        menuItemPicture.setImageBitmap(picture);
+        menuItemProfile.setText(profile);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }
