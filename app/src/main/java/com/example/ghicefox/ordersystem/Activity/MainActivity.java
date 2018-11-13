@@ -11,14 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.ghicefox.ordersystem.R;
 import com.example.ghicefox.ordersystem.Utils.ToastUtils;
 import com.github.shenyuanqing.zxingsimplify.zxing.Activity.CaptureActivity;
 
 public class MainActivity extends AppCompatActivity {
-    TextView responseText;
     private static final int REQUEST_SCAN = 0;
     private Context mContext;
     private Activity mActivity;
@@ -26,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        responseText = findViewById(R.id.response_text);
         mContext = this;
         mActivity = this;
     }

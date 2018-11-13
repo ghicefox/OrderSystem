@@ -3,15 +3,16 @@ package com.example.ghicefox.ordersystem.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ghicefox.ordersystem.Models.MenuItem;
-import com.example.ghicefox.ordersystem.R;
-import com.example.ghicefox.ordersystem.Utils.RightAdapter;
-import com.example.ghicefox.ordersystem.Utils.ToastUtils;
 import com.example.ghicefox.ordersystem.Models.menu;
+import com.example.ghicefox.ordersystem.R;
+import com.example.ghicefox.ordersystem.Utils.RecyclerviewAdapter;
+import com.example.ghicefox.ordersystem.Utils.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -101,9 +102,10 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void run() {
                 initMenuItems(responseData);
-                RightAdapter rightAdapter = new RightAdapter(MenuActivity.this,R.layout                                                                                                                                                                                                                                                                                                                                                                                                   .menu_item,rightList);
-                ListView Right_ListView = (ListView) findViewById(R.id.right_ListView);
-                Right_ListView.setAdapter(rightAdapter);
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
+                RecyclerviewAdapter adapter = new RecyclerviewAdapter(MenuActivity.this,rightList);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MenuActivity.this));
+                recyclerView.setAdapter(adapter);
             }
         });
     }

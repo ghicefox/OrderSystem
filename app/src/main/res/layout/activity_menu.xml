@@ -13,12 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="13">
-            <ListView
-                android:id="@+id/right_ListView"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:entries="@id/menu_item"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
 
         <LinearLayout
