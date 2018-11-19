@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         startActivities(new Intent[]{new Intent(MainActivity.this,PayActivity.class)});
     }
 
+    public void BlueTooth(View v){
+        startActivities(new Intent[]{new Intent(MainActivity.this,BlueTooth.class)});
+    }
+
     public void ScanCodes()
     {
         startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), REQUEST_SCAN);

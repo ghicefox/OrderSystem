@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ghicefox.ordersystem">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.MenuActivity" />
-        <activity android:name=".Activity.PayActivity"></activity>
+        <activity android:name=".Activity.PayActivity" />
+        <activity android:name=".Activity.BlueTooth"></activity>
     </application>
+
 </manifest>
